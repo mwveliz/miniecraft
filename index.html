@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Mini Craft</title>
+<style>
+  body { margin: 0; overflow: hidden; background-color: #78c5e7; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+
+<canvas id="gameCanvas"></canvas>
+
+<script>
+  const canvas = document.getElementById("gameCanvas");
+  const ctx = canvas.getContext("2d");
+  const blockSize = 20;
+  const worldWidth = 30;
+  const worldHeight = 20;
+  canvas.width = worldWidth * blockSize;
+  canvas.height = worldHeight * blockSize;
+
+  const world = [];
+  for (let y = 0; y < worldHeight; y++) {
+    world[y] = [];
+    for (let x = 0; x < worldWidth; x++) {
+      if (y > worldHeight * 0.6) {
+        world[y][x] = 'dirt';
+      } else if (y === Math.floor(worldHeight * 0.6)) {
+        world[y][x] = 'grass';
+      } else {
+        world[y][x] = null;
+      }
+    }
+  }
+
+  function drawPixel(x, y, color) {
+    ctx.fillStyle = color;
+    ctx.fillRect(x * blockSize, y * blockSize, blockSize, blockSize);
+  }
+
+  function drawWorld() {
+    for (let y = 0; y < worldHeight; y++) {
+      for (let x = 0; x < worldWidth; x++) {
+        const block = world[y][x];
+        if (block === 'grass') {
+          drawPixel(x, y, '#38761d');
+        } else if (block === 'dirt') {
+          drawPixel(x, y, '#795548');
+        }
+      }
+    }
+  }
+
+  drawWorld();
+</script>
+
+</body>
+</html>
